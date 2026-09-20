@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CV. MULTI BUANA SEJAHTERA — Absensi Karyawan</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="app-layout">
+
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="logo-mark">MBS</div>
+
+        <div class="brand-text">
+          <h1>CV. MULTI BUANA SEJAHTERA</h1>
+          <p>ABSENSI KARYAWAN</p>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#dashboard" class="nav-link active">
+          <span>▦</span>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="#absensi" class="nav-link">
+          <span>◉</span>
+          <span>Check In / Out</span>
+        </a>
+
+        <a href="#riwayat" class="nav-link">
+          <span>☷</span>
+          <span>Riwayat Absensi</span>
+        </a>
+
+        <a href="#karyawan" class="nav-link">
+          <span>♙</span>
+          <span>Manajemen Karyawan</span>
+        </a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+
+      <header class="top-header">
+        <div>
+          <p class="breadcrumb">Workspace / Dashboard</p>
+          <h1>Selamat Datang, Administrator 👋</h1>
+          <p class="subheading">
+            Kelola kehadiran tim Anda dengan lebih mudah hari ini.
+          </p>
+        </div>
+
+        <button id="btnTema" class="btn btn-light">
+          Mode Gelap
+        </button>
+      </header>
+
+      <section id="dashboard" class="dashboard-hero">
+        <div>
+          <p class="section-label">LIVE ATTENDANCE SYSTEM</p>
+          <h2>Monitoring Kehadiran<br />Dalam Satu Dashboard.</h2>
+          <p>
+            Pantau aktivitas absensi karyawan dengan cepat,
+            praktis, dan terstruktur.
+          </p>
+
+          <div class="time-panel">
+            <div>
+              <small id="liveDate">Memuat tanggal...</small>
+              <strong id="liveClock">00:00:00</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats-grid">
+        <article class="stat-card">
+          <p>Total Hadir</p>
+          <h3 id="statHadir">0</h3>
+          <small>Karyawan check-in hari ini</small>
+        </article>
+
+        <article class="stat-card">
+          <p>Terlambat</p>
+          <h3 id="statTerlambat">0</h3>
+          <small>Check-in setelah 09:00</small>
+        </article>
+
+        <article class="stat-card">
+          <p>Izin & Sakit</p>
+          <h3 id="statIzinSakit">0</h3>
+          <small>Karyawan tidak masuk</small>
+        </article>
+
+        <article class="stat-card">
+          <p>Belum Absen</p>
+          <h3 id="statBelumAbsen">0</h3>
+          <small>Belum memiliki data hari ini</small>
+        </article>
+      </section>
+
+      <section id="absensi" class="content-card">
+        <div class="section-heading">
+          <div>
+            <p class="section-label">ATTENDANCE CENTER</p>
+            <h2>Check In / Check Out</h2>
+            <p>Lakukan absensi dengan foto dan verifikasi lokasi.</p>
+          </div>
+        </div>
+
+        <form id="formAbsensi">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="pilihKaryawan">Nama Karyawan</label>
+              <select id="pilihKaryawan" required>
+                <option value="">Pilih nama karyawan</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="tipeAbsensi">Jenis Absensi</label>
+              <select id="tipeAbsensi">
+                <option value="Masuk">Check In</option>
+                <option value="Izin">Izin</option>
+                <option value="Sakit">Sakit</option>
+              </select>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="keteranganAbsensi">Keterangan</label>
+              <textarea
+                id="keteranganAbsensi"
+                rows="3"
+                placeholder="Tambahkan catatan jika diperlukan..."
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="verification-grid">
+            <div id="statusKamera" class="verification-item">
+              <span>◌</span>
+              <div>
+                <strong>Verifikasi Foto</strong>
+                <small>Belum mengambil foto</small>
+              </div>
+            </div>
+
+            <div id="statusLokasi" class="verification-item">
+              <span>⌖</span>
+              <div>
+                <strong>Verifikasi Lokasi</strong>
+                <small>Belum mengambil lokasi</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" id="btnResetAbsensi" class="btn btn-light">
+              Bersihkan
+            </button>
+
+            <button type="submit" class="btn btn-primary">
+              Simpan Absensi
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <section class="content-card">
+        <div class="section-heading">
+          <div>
+            <p class="section-label">VERIFIKASI</p>
+            <h2>Foto dan Lokasi</h2>
+            <p>Ambil foto selfie dan lokasi ketika melakukan check-in.</p>
+          </div>
+        </div>
+
+        <div class="verification-panel">
+          <div>
+            <div class="camera-box">
+              <video id="videoKamera" autoplay playsinline></video>
+              <canvas id="canvasFoto"></canvas>
+
+              <div id="cameraPlaceholder" class="camera-placeholder">
+                <strong>Kamera belum aktif</strong>
+                <small>Aktifkan kamera untuk mengambil foto selfie.</small>
+              </div>
+
+              <img id="hasilFoto" alt="Hasil foto absensi" />
+            </div>
+
+            <div class="button-row">
+              <button type="button" id="btnAktifkanKamera" class="btn btn-outline">
+                Aktifkan Kamera
+              </button>
+
+              <button type="button" id="btnAmbilFoto" class="btn btn-dark" disabled>
+                Ambil Foto
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <div id="detailLokasi" class="location-box">
+              <span class="location-icon">⌖</span>
+              <div>
+                <strong>Lokasi belum diverifikasi</strong>
+                <small>Klik tombol untuk mengambil koordinat Anda.</small>
+              </div>
+            </div>
+
+            <button type="button" id="btnAmbilLokasi" class="btn btn-primary full-button">
+              ⌖ Ambil Lokasi Saat Ini
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="riwayat" class="content-card">
+        <div class="section-heading section-heading-row">
+          <div>
+            <p class="section-label">ATTENDANCE RECORDS</p>
+            <h2>Riwayat Absensi</h2>
+            <p>Daftar kehadiran karyawan yang tersimpan di sistem.</p>
+          </div>
+
+          <button id="btnExportCSV" class="btn btn-outline">
+            ↓ Export CSV
+          </button>
+        </div>
+
+        <div class="filter-area">
+          <input
+            type="text"
+            id="cariAbsensi"
+            placeholder="Cari nama, jabatan, atau status..."
+          />
+
+          <input type="date" id="filterTanggal" />
+
+          <button id="btnResetFilter" class="btn btn-light">
+            Reset Filter
+          </button>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+  <tr>
+    <th>Karyawan</th>
+    <th>Tanggal</th>
+    <th>Check In</th>
+    <th>Check Out</th>
+    <th>Durasi Kerja</th>
+    <th>Status Kehadiran</th>
+    <th>Status Pulang</th>
+    <th>Lokasi</th>
+    <th>Foto</th>
+    <th>Catatan</th>
+    <th>Aksi</th>
+  </tr>
+</thead>
+            </thead>
+
+            <tbody id="tabelAbsensi"></tbody>
+          </table>
+        </div>
+
+        <div id="emptyState" class="empty-state">
+          <h3>Belum ada data absensi</h3>
+          <p>Silakan lakukan check-in untuk menambahkan data pertama.</p>
+        </div>
+      </section>
+
+      <section id="karyawan" class="employee-section">
+        <div class="section-heading">
+          <div>
+            <p class="section-label">TEAM MANAGEMENT</p>
+            <h2>Manajemen Karyawan</h2>
+            <p>Tambah atau hapus karyawan dari sistem absensi.</p>
+          </div>
+        </div>
+
+        <div class="employee-grid">
+          <form id="formKaryawan" class="content-card">
+            <h3>Tambah Karyawan</h3>
+
+            <div class="form-group">
+              <label for="namaKaryawanBaru">Nama Lengkap</label>
+              <input
+                type="text"
+                id="namaKaryawanBaru"
+                placeholder="Contoh: Slamet Aspeiyadi"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="jabatanKaryawanBaru">Jabatan</label>
+              <input
+                type="text"
+                id="jabatanKaryawanBaru"
+                placeholder="Contoh: Account Executive"
+                required
+              />
+            </div>
+
+            <button type="submit" class="btn btn-primary full-button">
+              + Tambah Karyawan
+            </button>
+          </form>
+
+          <div class="content-card">
+            <div class="section-heading-row">
+              <h3>Daftar Karyawan</h3>
+              <span id="jumlahKaryawan">0 Karyawan</span>
+            </div>
+
+            <div id="daftarKaryawan"></div>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        © 2026 PresencePro — Data tersimpan lokal pada browser perangkat ini.
+      </footer>
+    </main>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
